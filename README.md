@@ -19,8 +19,8 @@ Seeds are gathered by capturing or "sowing" them.
 1. Game will select randomly if Player 1 or Player 2 goes first.
 
 2. Once the game begins, the player will be asked to select a hole on their side via number input, idicated by the number in parenthesis.
-	-0 through 6 for Player 1
-   -8 through 14 for Player 2
+	* 0 through 6 for Player 1
+   	* 8 through 14 for Player 2
 
 3. The game will begin distributing the seeds into each hole counter-clockwise (except for the opponent's store) until one of the below conditions are met:
 
