@@ -1,5 +1,7 @@
 # Mancala
 
+![Mancala Board](https://github.com/csbolivar1/Mancala/blob/master/Images/MancalaBoard.jpg)
+
 Mancala is a turn based count and capture board game. More information can be found [here](https://en.wikipedia.org/wiki/Mancala "Mancala Wiki").
 
 ## Objective
