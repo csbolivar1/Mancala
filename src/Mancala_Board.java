@@ -29,7 +29,7 @@ public class Mancala_Board {
 	// Show what the board looks like so the players know what's going on
 	private static int[] displaytheBoard() {
 		
-		System.out.println("--------------------------------------------------");
+		System.out.println("===================================================");
 		System.out.println("		  Player 2's Side		");
 		System.out.print("    ");
 		
@@ -54,7 +54,7 @@ public class Mancala_Board {
 		}
 		System.out.println("\n");
 		System.out.println("	   	  Player 1's Side		");
-		System.out.println("--------------------------------------------------");
+		System.out.println("===================================================");
 		
 		return null;
 	}
@@ -73,7 +73,7 @@ public class Mancala_Board {
 					Board[3] == 0 && Board[4] == 0 && Board[5] == 0 && Board[6] == 0) {
 				System.out.println("There are no more shells on Player 1's side!");
 				
-				// Add any remaining shells on Player 2's side to their collection
+				// Add any remaining shells on Player 1's side to their collection
 				Board[15] = Board[15] + Board[8] + Board[9] + Board[10] + Board[11] + Board[12] + Board[13] + Board[14];
 				
 				Board[8] = 0;
@@ -89,10 +89,10 @@ public class Mancala_Board {
 			
 			else { // Play the rest of the game
 			
-			System.out.println("Player 1, choose one of your pockets (0 through 6)");
-			index = player1_input.nextInt(); // index is where Player 1 picks up the shells
+			// Choose a pocket
+			System.out.println("Player 1, choose one of your pockets (1 through 7)");
+			index = player1_input.nextInt() - 1; // index is where Player 1 picks up the shells
 			
-			//Choose a pocket
 			if(index == 0 || index == 1 || index == 2 ||
 			   index == 3 || index == 4 || index == 5 || index == 6 && Board[index] != 0) {
 				
@@ -150,7 +150,7 @@ public class Mancala_Board {
 				Play();
 			}
 			
-			// Capture opponent's shells; Player 2 plays afterwards
+			// Capture opponent's shells; Player 2's turn afterwards
 			if(Board[0] == 1 && hand == 0) {
 				
 				System.out.println("You have collected " + Board[14] + " shells from Player 2. It is now Player 2's turn.");
@@ -297,10 +297,10 @@ public class Mancala_Board {
 				EndGame();
 			}
 			
-			System.out.println("Player 2, choose one of your pockets (8 through 14)");
-			index2 = player2_input.nextInt();
-			
 			// Choose a pocket
+			System.out.println("Player 2, choose one of your pockets (1 through 7)");
+			index2 = player2_input.nextInt() + 7;
+			
 			if(index2 == 8 || index2 == 9 || index2 == 10 ||
 			   index2 == 11 || index2 == 12 || index2 == 13 || index2 == 14) {
 				System.out.println("Player 2 chose " + index2);
@@ -320,14 +320,14 @@ public class Mancala_Board {
 						
 						
 						// Player 2 goes again if they land in their own store
-						if(index2 == 14 && hand == 1) {
+						if(index2 == 15 && hand == 1) {
 							System.out.println("You landed in your own store! Go again!");
 							Play2();
 						}
 						
-						// Loop back to the 'beginning' of array/board (AKA index 0) if Player 2 still has more than 1 shell in hand
+						// Loop back to the 'beginning' of array/board (index 0) if Player 2 still has more than 1 shell in hand
 						// This is the only significant difference between Play() and Play2().
-						if(index2 == 14 && hand != 1) {
+						if(index2 == 15 && hand != 1) {
 							index2 = 0;
 							Board[0] = Board[0] + 1;
 							System.out.println("You dropped a shell in index 0");
@@ -361,8 +361,7 @@ public class Mancala_Board {
 				Play2();
 			}
 			
-			// Capturing shells; Player 1 plays afterwards
-			
+			// Capturing shells; Player 1's turn afterwards
 			if(Board[8] == 1 && hand == 0) {
 				
 				System.out.println("You have captured " + Board[6] + " shells! It is now Player 1's turn");
@@ -506,6 +505,15 @@ public class Mancala_Board {
 			
 			return null;
 		}
+		
+		// If player 1 and player 2 are tied (46 shells each)
+		if(Board[7] == Board[15]) {
+			displaytheBoard();
+			System.out.println("Tie Game!");
+			
+			return null;
+		}
+		
 		Player1_turn = false;
 		Player2_turn = false;
 		System.out.println("Thanks for playing!");
