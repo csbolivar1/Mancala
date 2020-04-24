@@ -1,10 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Mancala_Board {
-	
-	public static int Board[] = new int[16]; // Array to store everything; indexes 7 and 15 are Player 1's and Player 2's stores, respectively
-											// Indexes 0 through 6 are Player 1's pockets, indexes 8 through 14 are Player 2's pockets
+public class MancalaMain extends Board {
 	
 	private static Scanner player1_input; // Takes Player 1's input to see which index to pick up shells from
 	private static Scanner player2_input; // Takes Player 2's input to see which index to pick up shells from
@@ -13,58 +10,15 @@ public class Mancala_Board {
 	private static int hand = 0; // Keeps track of how many shells are currently at hand; used for both Players' turns
 	private static boolean Player1_turn = false; // Determines who's turn it currently is;
 	private static boolean Player2_turn = false; // both start out false.
+	private static Board board;
 
-	
-	// Refill the Board to its default state (7 shells per pocket, excluding stores)
-	private static int[] FilltheBoard() {
-		for(int i = 0; i <= 6; i++) {
-			Board[i] = 7;
-		}
-		for(int j = 8; j <= 14; j++) {
-			Board[j] = 7;
-		}
-		return null;
-	}
-	
-	// Show what the board looks like so the players know what's going on
-	private static int[] displaytheBoard() {
-		
-		System.out.println("===================================================");
-		System.out.println("		  Player 2's Side		");
-		System.out.print("    ");
-		
-		//Upper row is player 2's side
-		for(int p = 14; p > 7; p--) {
-			
-			System.out.print( Board[p] + "       ");
-		}
-		
-		//Displays player 2's store on the left, then player 1's store on the right
-		System.out.println("\n" + Board[15]
-				+ "\t" + "\t" + "\t" + "\t" +" \t" + "\t" +  "         " +  Board[7]);
-		
-		
-		System.out.print("    ");
-		
-		
-		//Lower row is player 1's side
-		for(int p = 0; p < 7; p++) {
-			
-			System.out.print(Board[p] + "       ");
-		}
-		System.out.println("\n");
-		System.out.println("	   	  Player 1's Side		");
-		System.out.println("===================================================");
-		
-		return null;
-	}
-	
+
 	// Player 1's movements
 	private static String Play() {
 		
 		// Ask Player 1 which non-zero index to pick.
 		player1_input = new Scanner(System.in);
-		displaytheBoard();
+		board.displayBoard();
 		
 		if(Player1_turn == true) { 
 			
@@ -132,7 +86,7 @@ public class Mancala_Board {
 						
 						// Decrement the amount of shells in hand by 1 b/c you're placing shells in each pocket.
 						hand--;
-						displaytheBoard();
+						board.displayBoard();
 						System.out.println("You have " + hand + " shells left in your hand");
 				}
 					
@@ -275,7 +229,7 @@ public class Mancala_Board {
 	private static String Play2() {
 		
 		player2_input = new Scanner(System.in);
-		displaytheBoard();
+		board.displayBoard();
 		
 		if(Player2_turn == true) {
 			
@@ -343,7 +297,7 @@ public class Mancala_Board {
 							hand--;
 						}
 						
-						displaytheBoard();
+						board.displayBoard();
 						
 						hand--;
 						System.out.println("There are " + hand + " shells left in my hand");
@@ -492,7 +446,7 @@ public class Mancala_Board {
 		
 		// If player 1 has more shells, player 1 wins
 		if(Board[7] > Board[15]) {
-			displaytheBoard();
+			board.displayBoard();
 			System.out.println("Player 1 wins!");
 			return null;
 			
@@ -500,7 +454,7 @@ public class Mancala_Board {
 		
 		// If player 2 has more shells, player 2 wins
 		if(Board[7] < Board[15]) {
-			displaytheBoard();
+			board.displayBoard();
 			System.out.println("Player 2 wins!");
 			
 			return null;
@@ -508,7 +462,7 @@ public class Mancala_Board {
 		
 		// If player 1 and player 2 are tied (46 shells each)
 		if(Board[7] == Board[15]) {
-			displaytheBoard();
+			board.displayBoard();
 			System.out.println("Tie Game!");
 			
 			return null;
@@ -524,7 +478,7 @@ public class Mancala_Board {
 		int num;
 		Random coin_flip = new Random();
 		
-		FilltheBoard(); // Get the board's start state
+		board.fillBoard(); // Get the board's start state
 		
 		System.out.println("Lets Play Mancala!!!");
 		
