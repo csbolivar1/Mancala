@@ -4,6 +4,8 @@
 
 Mancala is a turn based count and capture board game. More information can be found [here](https://en.wikipedia.org/wiki/Mancala "Mancala Wiki").
 
+Open the game by running PlayMancala.bat, located in the PlayMancala folder
+
 ## Objective
 The object of the game is to gather more "seeds" in your "store" than your opponent. Each player's store is the large hole to their right side. 
 Seeds are gathered by capturing or "sowing" them.
