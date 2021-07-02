@@ -14,7 +14,7 @@ public class MancalaMain extends Board {
 
 
 	// Player 1's movements
-	private static String Play() {
+	private static String play() {
 		
 		// Ask Player 1 which non-zero index to pick.
 		player1_input = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class MancalaMain extends Board {
 				Board[13] = 0;
 				Board[14] = 0;
 				
-				EndGame();
+				end();
 			} 
 			
 			else { // Play the rest of the game
@@ -81,7 +81,7 @@ public class MancalaMain extends Board {
 						// Player 1 goes again if the last shell lands in index 7 (AKA their own store)
 						if(index == 7 && hand == 1) {
 							System.out.println("You landed in your own store! Go again!");
-							Play();
+							play();
 						}
 						
 						// Decrement the amount of shells in hand by 1 b/c you're placing shells in each pocket.
@@ -101,7 +101,7 @@ public class MancalaMain extends Board {
 			else { // Supposed to occur if you pick an index w/o any shells
 				System.out.println("That pocket doesn't have any shells in it");
 				System.out.println("Choose one of your pockets (0 through 6)");
-				Play();
+				play();
 			}
 			
 			// Capture opponent's shells; Player 2's turn afterwards
@@ -117,7 +117,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			if(Board[1] == 1 && hand == 0) {
@@ -131,7 +131,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			if(Board[2] == 1 && hand == 0) {
@@ -145,7 +145,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			if(Board[3] == 1 && hand == 0) {
@@ -173,7 +173,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			if(Board[5] == 1 && hand == 0) {
@@ -187,7 +187,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			if(Board[6] == 1 && hand == 0) {
@@ -201,7 +201,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = false;
 				Player2_turn = true;
-				Play2();
+				play2();
 			}
 			
 			// End Player 1's turn if Player 1 lands on an empty pocket on Player 2's side
@@ -218,7 +218,7 @@ public class MancalaMain extends Board {
 		
 		Player1_turn = false;
 		Player2_turn = true;
-		Play2();
+		play2();
 		
 		}
 		return null;
@@ -226,7 +226,7 @@ public class MancalaMain extends Board {
 	}
 	
 	// Player 2's movements; alot of the same as Player 1's movements except for one extra if statement while distributing shells
-	private static String Play2() {
+	private static String play2() {
 		
 		player2_input = new Scanner(System.in);
 		board.displayBoard();
@@ -248,7 +248,7 @@ public class MancalaMain extends Board {
 				Board[5] = 0;
 				Board[6] = 0;
 				
-				EndGame();
+				end();
 			}
 			
 			// Choose a pocket
@@ -276,7 +276,7 @@ public class MancalaMain extends Board {
 						// Player 2 goes again if they land in their own store
 						if(index2 == 15 && hand == 1) {
 							System.out.println("You landed in your own store! Go again!");
-							Play2();
+							play2();
 						}
 						
 						// Loop back to the 'beginning' of array/board (index 0) if Player 2 still has more than 1 shell in hand
@@ -312,7 +312,7 @@ public class MancalaMain extends Board {
 			}
 			else {
 				System.out.println("Please choose another index");
-				Play2();
+				play2();
 			}
 			
 			// Capturing shells; Player 1's turn afterwards
@@ -327,7 +327,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -342,7 +342,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -357,7 +357,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -372,7 +372,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -387,7 +387,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -403,7 +403,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -418,7 +418,7 @@ public class MancalaMain extends Board {
 				
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 				
 			}
 			
@@ -428,7 +428,7 @@ public class MancalaMain extends Board {
 				System.out.println("You have landed on an empty space on your opponent's side. It's now Player 1's turn.");
 				Player1_turn = true;
 				Player2_turn = false;
-				Play();
+				play();
 			}
 			
 					
@@ -438,7 +438,7 @@ public class MancalaMain extends Board {
 	}
 	
 	// Display final results
-	private static String EndGame() {
+	private static String end() {
 	
 		
 		System.out.println("Player 1 has " + Board[7] + " shells.");
@@ -489,14 +489,14 @@ public class MancalaMain extends Board {
 			Player1_turn = true;
 			Player2_turn = false;
 			System.out.println("Player 1 will go first.");
-			Play();
+			play();
 		}
 		
 		if(num == 1) {
 			Player2_turn = true;
 			Player1_turn = false;
 			System.out.println("Player 2 will go first.");
-			Play2();
+			play2();
 			
 		}
 		
