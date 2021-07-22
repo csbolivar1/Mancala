@@ -14,18 +14,17 @@ public class Board {
 	}
 	
 	// Reset the gameboard to its default state (7 shells per pocket, 0 in stores)
-	protected static int[] fillBoard() {
+	protected static void fillBoard() {
 		for(int i = 0; i <= 6; i++) {
 			gameboard[i] = 7;
 		}
 		for(int j = 8; j <= 14; j++) {
 			gameboard[j] = 7;
 		}
-		return null;
 	}
 	
 	// Show the gameboard
-	protected static int[] displayBoard() {
+	protected static void displayBoard() {
 		
 		System.out.println("===================================================");
 		System.out.println("		  Player 2's Side		");
@@ -53,8 +52,6 @@ public class Board {
 		System.out.println("\n");
 		System.out.println("	   	  Player 1's Side		");
 		System.out.println("===================================================");
-		
-		return null;
 		
 	}	
 }

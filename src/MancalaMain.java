@@ -20,7 +20,7 @@ public class MancalaMain extends Board {
 
 
 	// Player 1's movements
-	private static String play() {
+	private static void play() {
 		
 		// Ask Player 1 which non-zero index to pick.
 		player1_input = new Scanner(System.in);
@@ -228,12 +228,10 @@ public class MancalaMain extends Board {
 		play2();
 		
 		}
-		return null;
-
 	}
 	
 	// Player 2's movements; alot of the same as Player 1's movements except for one extra if statement while distributing shells
-	private static String play2() {
+	private static void play2() {
 		
 		player2_input = new Scanner(System.in);
 		board.displayBoard();
@@ -441,11 +439,10 @@ public class MancalaMain extends Board {
 					
 		}
 		
-		return null;
 	}
 	
 	// Display final results
-	private static String end() {
+	private static void end() {
 	
 		
 		System.out.println("Player 1 has " + gameboard[7] + " shells.");
@@ -455,30 +452,25 @@ public class MancalaMain extends Board {
 		if(gameboard[7] > gameboard[15]) {
 			board.displayBoard();
 			System.out.println("Player 1 wins!");
-			return null;
-			
 		}
 		
 		// If player 2 has more shells, player 2 wins
 		if(gameboard[7] < gameboard[15]) {
 			board.displayBoard();
 			System.out.println("Player 2 wins!");
-			
-			return null;
+
 		}
 		
 		// If player 1 and player 2 are tied (46 shells each)
 		if(gameboard[7] == gameboard[15]) {
 			board.displayBoard();
 			System.out.println("Tie Game!");
-			
-			return null;
+
 		}
 		
 		player1_turn = false;
 		player2_turn = false;
 		System.out.println("Thanks for playing!");
-		return null;
 	}
 	
 	public static void main(String[] args) {
