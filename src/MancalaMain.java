@@ -1,13 +1,19 @@
+/*Mancala Glossary:
+	Stores - location of each players' total count
+	Shells - the 'gamepieces', represented by numbers in each index
+	Pockets - location where 'shells' are stored for players to obtain and add to their store
+*/	
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class MancalaMain extends Board {
 	
-	private static Scanner player1_input; // Takes Player 1's input to see which index to pick up shells from
-	private static Scanner player2_input; // Takes Player 2's input to see which index to pick up shells from
-	private static int index; // Keeps track of the index during Player 1's turn
-	private static int index2; // Keeps track of the index during Player 2's turn
-	private static int hand = 0; // Keeps track of how many shells are currently at hand; used for both Players' turns
+	private static Scanner player1_input; 		 // Takes Player 1's input to see which index to pick up shells from
+	private static Scanner player2_input; 		 // Takes Player 2's input to see which index to pick up shells from
+	private static int index; 					 // Keeps track of the index during Player 1's turn
+	private static int index2; 					 // Keeps track of the index during Player 2's turn
+	private static int hand = 0; 				 // Keeps track of how many shells are currently at hand; used for both Players' turns
 	private static boolean player1_turn = false; // Determines who's turn it currently is;
 	private static boolean player2_turn = false; // both start out false.
 	private static Board board;

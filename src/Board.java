@@ -1,13 +1,19 @@
+/*Mancala Glossary:
+	Stores - location of each players' total count
+	Shells - the 'gamepieces', represented by numbers in each index
+	Pockets - location where 'shells' are stored for players to obtain and add to their store
+*/	
 
 public class Board {
-	public static int gameboard[] = new int[16];  // Array to store everything; indexes 7 and 15 are Player 1's and Player 2's stores, respectively
-											  // Indexes 0 through 6 are Player 1's pockets, indexes 8 through 14 are Player 2's pockets
+	public static int gameboard[] = new int[16];  // Gameboard holds all gamepieces 
+												  // Indexes 7 and 15 are Player 1's and Player 2's stores, respectively
+											      // Indexes 0 through 6 are Player 1's pockets, indexes 8 through 14 are Player 2's pockets
 	
 	public Board() {
 		
 	}
 	
-	// Refill the Board to its default state (7 shells per pocket, excluding stores)
+	// Reset the gameboard to its default state (7 shells per pocket, 0 in stores)
 	protected static int[] fillBoard() {
 		for(int i = 0; i <= 6; i++) {
 			gameboard[i] = 7;
@@ -18,7 +24,7 @@ public class Board {
 		return null;
 	}
 	
-	// Show what the board looks like so the players know what's going on
+	// Show the gameboard
 	protected static int[] displayBoard() {
 		
 		System.out.println("===================================================");
