@@ -6,6 +6,12 @@ Mancala is a turn based count and capture board game. More information can be fo
 
 Open the game by running PlayMancala.bat, located in the PlayMancala folder
 
+## How to run
+
+Prerequisites: Ensure you have Java installed on your computer. You can download and install the latest Java version [here](https://www.java.com/download/ie_manual.jsp)
+
+In the PlayMancala folder, run PlayMancala.bat (safe to bypass Windows Defender warnings; .bat runs Mancala.jar)
+
 ## Objective
 The object of the game is to gather more "seeds" in your "store" than your opponent. Each player's store is the large hole to their right side. 
 Seeds are gathered by capturing or "sowing" them.
