@@ -9,9 +9,7 @@ public class Board {
 												  // Indexes 7 and 15 are Player 1's and Player 2's stores, respectively
 											      // Indexes 0 through 6 are Player 1's pockets, indexes 8 through 14 are Player 2's pockets
 	
-	public Board() {
-		
-	}
+	public Board() {}
 	
 	// Reset the gameboard to its default state (7 shells per pocket, 0 in stores)
 	protected static void fillBoard() {
@@ -39,14 +37,11 @@ public class Board {
 		//Displays player 2's store on the left, then player 1's store on the right
 		System.out.println("\n" + gameboard[15]
 				+ "\t" + "\t" + "\t" + "\t" +" \t" + "\t" +  "         " +  gameboard[7]);
-		
-		
 		System.out.print("    ");
 		
 		
 		//Lower row is player 1's side
 		for(int p = 0; p < 7; p++) {
-			
 			System.out.print(gameboard[p] + "       ");
 		}
 		System.out.println("\n");
