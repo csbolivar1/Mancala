@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class PlayMancala extends Board {
@@ -7,8 +8,8 @@ public class PlayMancala extends Board {
 	private static int index; 					 // Keeps track of the index during Player 1's turn
 	private static int index2; 					 // Keeps track of the index during Player 2's turn
 	private static int hand = 0; 				 // Keeps track of how many shells are currently at hand; used for both Players' turns
-	private static boolean player1_turn = false; // Determines who's turn it currently is;
-	private static boolean player2_turn = false; // both start out false.
+	public static boolean player1_turn = false; // Determines who's turn it currently is;
+	public static boolean player2_turn = false; // both start out false.
 	private static Board board;
 	
 	// Player 1's movements
@@ -21,6 +22,7 @@ public class PlayMancala extends Board {
 		
 		if(player1_turn == true) { 
 			
+			// TODO: Separate method for endgame check? 
 			// Go here if there aren't any more shells in Player 1's pockets. Occurs towards the end of the game
 			if(gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 
 					gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0) {
@@ -40,12 +42,20 @@ public class PlayMancala extends Board {
 				end();
 			} 
 			
+			/*
+			 * TODO: if player 2 turn == true, check if there are no more shells on player 2's
+			 * side Remove below else statement, play the game after first two endgame
+			 * checks.
+			 */
+			
 			else { // Play the rest of the game
 			
+			// PART 1:  DISTRIBUTING SHELLS
 			// Choose a pocket
-			System.out.println("Player 1, choose one of your pockets (1 through 7)");
+			System.out.println("Player 1, choose one of your pockets (1 through 7)"); // TODO: Remove player specific comments (except for choosing pockets; each player can only select certain pockets)
 			index = player1_input.nextInt() - 1; // index is where Player 1 picks up the shells
 			
+			// TODO: find a way to loop starting at specific point(s) depending on player turn
 			if(index == 0 || index == 1 || index == 2 ||
 			   index == 3 || index == 4 || index == 5 || index == 6 && gameboard[index] != 0) {
 				
@@ -102,6 +112,10 @@ public class PlayMancala extends Board {
 				System.out.println("Choose one of your pockets (0 through 6)");
 				play();
 			}
+			
+			// PART 2: CAPTURING SHELLS
+			// TODO: create list of numbers that define each players' side? Use Key hashmap?
+			// Pair player 1' pocket with player 2's opposite pocket, and vice versa
 			
 			// Capture opponent's shells; Player 2's turn afterwards
 			if(gameboard[0] == 1 && hand == 0) {
