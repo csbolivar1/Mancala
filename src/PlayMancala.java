@@ -18,29 +18,33 @@ public class PlayMancala extends Board {
 		// Ask Player 1 which non-zero index to pick.
 		player1_input = new Scanner(System.in);
 		board.displayBoard();
-	
-		
-		if(player1_turn == true) { 
+
+		// Check if either players' sides are completely empty
+		// if one of them is, game is over.
+		if((gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 				// Player 1 side
+		   gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0)
+				||
+			(gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 &&			// Player 2 side
+			 gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 &&
+			 gameboard[14] == 0)) {
+			System.out.println("There are no more shells on Player 1's side!");
 			
-			// TODO: Separate method for endgame check? 
-			// Go here if there aren't any more shells in Player 1's pockets. Occurs towards the end of the game
-			if(gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 
-					gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0) {
-				System.out.println("There are no more shells on Player 1's side!");
-				
-				// Add any remaining shells on Player 1's side to their collection
-				gameboard[15] = gameboard[15] + gameboard[8] + gameboard[9] + gameboard[10] + gameboard[11] + gameboard[12] + gameboard[13] + gameboard[14];
-				
-				gameboard[8] = 0;
-				gameboard[9] = 0;
-				gameboard[10] = 0;
-				gameboard[11] = 0;
-				gameboard[12] = 0;
-				gameboard[13] = 0;
-				gameboard[14] = 0;
-				
-				end();
-			} 
+			// Add any remaining shells on Player 1's side to their collection
+			gameboard[15] = gameboard[15] + gameboard[8] + gameboard[9] + gameboard[10] + gameboard[11] + gameboard[12] + gameboard[13] + gameboard[14];
+			
+			// Add any remaining shells on Player 2's side to their collection
+			gameboard[7] = gameboard[7] + gameboard[0] + gameboard[1] + gameboard[2] + gameboard[3] + gameboard[4] + gameboard[5] + gameboard[6];
+			
+			// Is there a need to empty out other pockets at the end of the game? 
+			/*
+			 * gameboard[8] = 0; gameboard[9] = 0; gameboard[10] = 0; gameboard[11] = 0;
+			 * gameboard[12] = 0; gameboard[13] = 0; gameboard[14] = 0;
+			 * gameboard[0] = 0; gameboard[1] = 0; gameboard[2] = 0; gameboard[3] = 0;
+			 * gameboard[4] = 0; gameboard[5] = 0; gameboard[6] = 0;
+			 */
+			
+			end();
+		} 
 			
 			/*
 			 * TODO: if player 2 turn == true, check if there are no more shells on player 2's
@@ -48,7 +52,7 @@ public class PlayMancala extends Board {
 			 * checks.
 			 */
 			
-			else { // Play the rest of the game
+			//else { // Play the rest of the game
 			
 			// PART 1:  DISTRIBUTING SHELLS
 			// Choose a pocket
@@ -113,10 +117,7 @@ public class PlayMancala extends Board {
 				play();
 			}
 			
-			// PART 2: CAPTURING SHELLS
-			// TODO: create list of numbers that define each players' side? Use Key hashmap?
-			// Pair player 1' pocket with player 2's opposite pocket, and vice versa
-			
+			// PART 2: CAPTURING SHELLS			
 			// Capture opponent's shells; Player 2's turn afterwards
 			if(gameboard[0] == 1 && hand == 0) {
 				
@@ -233,219 +234,176 @@ public class PlayMancala extends Board {
 		player2_turn = true;
 		play2();
 		
-		}
-	}
+		// }
 	
 	// Player 2's movements; alot of the same as Player 1's movements except for one extra if statement while distributing shells
-	public static void play2() {
-		
-		player2_input = new Scanner(System.in);
-		board.displayBoard();
-		
-		if(player2_turn == true) {
-			
-			if(gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && 
-					gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 && gameboard[14] == 0) {
-				System.out.println("There are no more shells on Player 2's side!");
-				
-				// Add any remaining shells on Player 1's side to their collection
-				gameboard[7] = gameboard[7] + gameboard[0] + gameboard[1] + gameboard[2] + gameboard[3] + gameboard[4] + gameboard[5] + gameboard[6];
-				
-				gameboard[0] = 0;
-				gameboard[1] = 0;
-				gameboard[2] = 0;
-				gameboard[3] = 0;
-				gameboard[4] = 0;
-				gameboard[5] = 0;
-				gameboard[6] = 0;
-				
-				end();
-			}
-			
-			// Choose a pocket
-			System.out.println("Player 2, choose one of your pockets (1 through 7)");
-			index2 = player2_input.nextInt() + 7;
-			
-			if(index2 == 8 || index2 == 9 || index2 == 10 ||
-			   index2 == 11 || index2 == 12 || index2 == 13 || index2 == 14) {
-				System.out.println("Player 2 chose " + index2);
-				
-				while(gameboard[index2] != 0) {
-					
-					System.out.println("You picked up " + gameboard[index2] + " shells from pocket " + index2);
-					hand = gameboard[index2];
-					gameboard[index2] = 0;
-					
-					// Distribute the shells to the next pockets
-					while(hand >= 1 && index2 <= 15) {
-						
-						index2++;
-						gameboard[index2] = gameboard[index2] + 1;
-						System.out.println("You dropped a shell in index " + index2);
-						
-						
-						// Player 2 goes again if they land in their own store
-						if(index2 == 15 && hand == 1) {
-							System.out.println("You landed in your own store! Go again!");
-							play2();
-						}
-						
-						// Loop back to the 'beginning' of array/board (index 0) if Player 2 still has more than 1 shell in hand
-						// This is the only significant difference between Play() and Play2().
-						if(index2 == 15 && hand != 1) {
-							index2 = 0;
-							gameboard[0] = gameboard[0] + 1;
-							System.out.println("You dropped a shell in index 0");
-							hand--;
-							
-						}
-						
-						// Skip Player 1's store
-						if(index2 == 6) {
-							index2 = 8;
-							gameboard[8] = gameboard[8] + 1;
-							System.out.println("You dropped a shell in index 8");
-							hand--;
-						}
-						
-						board.displayBoard();
-						
-						hand--;
-						System.out.println("There are " + hand + " shells left in my hand");
-					}
-					
-					if(index2 != 15 && gameboard[index2] == 1) {
-						break;
-					}
-					
-				}
-				
-			}
-			else {
-				System.out.println("Please choose another index");
-				play2();
-			}
-			
-			// Capturing shells; Player 1's turn afterwards
-			if(gameboard[8] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[6] + " shells! It is now Player 1's turn");
-				
-				gameboard[15] = gameboard[15] + gameboard[8];
-				gameboard[8] = 0;
-				gameboard[15] = gameboard[15] + gameboard[6];
-				gameboard[6] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			if(gameboard[9] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[5] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[9];
-				gameboard[9] = 0;
-				gameboard[15] = gameboard[15] + gameboard[5];
-				gameboard[5] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			if(gameboard[10] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[4] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[10];
-				gameboard[10] = 0;
-				gameboard[15] = gameboard[15] + gameboard[4];
-				gameboard[4] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			if(gameboard[11] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[3] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[11];
-				gameboard[11] = 0;
-				gameboard[15] = gameboard[15] + gameboard[3];
-				gameboard[3] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			if(gameboard[12] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[2] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[12];
-				gameboard[12] = 0;
-				gameboard[15] = gameboard[15] + gameboard[2];
-				gameboard[2] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			
-			if(gameboard[13] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[1] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[13];
-				gameboard[13] = 0;
-				gameboard[15] = gameboard[15] + gameboard[1];
-				gameboard[1] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			if(gameboard[14] == 1 && hand == 0) {
-				
-				System.out.println("You have captured " + gameboard[0] + " shells! It is now Player 1's turn.");
-				
-				gameboard[15] = gameboard[15] + gameboard[14];
-				gameboard[14] = 0;
-				gameboard[15] = gameboard[15] + gameboard[0];
-				gameboard[0] = 0;
-				
-				player1_turn = true;
-				player2_turn = false;
-				play();
-				
-			}
-			
-			// End turn if you land on an empty pocket on your Player 1's side
-			if(gameboard[0] == 1 || gameboard[1] == 1 || gameboard[2] == 1 || gameboard[3] == 1 || gameboard[4] == 1 || gameboard[5] == 1
-					|| gameboard[6] == 1 && hand == 1); {
-				System.out.println("You have landed on an empty space on your opponent's side. It's now Player 1's turn.");
-				player1_turn = true;
-				player2_turn = false;
-				play();
-			}
-			
-					
-		}
-		
-	}
+	/*
+	 * public static void play2() {
+	 * 
+	 * player2_input = new Scanner(System.in); board.displayBoard();
+	 * 
+	 * if(player2_turn == true) {
+	 * 
+	 * if(gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 &&
+	 * gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 &&
+	 * gameboard[14] == 0) {
+	 * System.out.println("There are no more shells on Player 2's side!");
+	 * 
+	 * // Add any remaining shells on Player 1's side to their collection
+	 * gameboard[7] = gameboard[7] + gameboard[0] + gameboard[1] + gameboard[2] +
+	 * gameboard[3] + gameboard[4] + gameboard[5] + gameboard[6];
+	 * 
+	 * gameboard[0] = 0; gameboard[1] = 0; gameboard[2] = 0; gameboard[3] = 0;
+	 * gameboard[4] = 0; gameboard[5] = 0; gameboard[6] = 0;
+	 * 
+	 * end(); }
+	 * 
+	 * // Choose a pocket
+	 * System.out.println("Player 2, choose one of your pockets (1 through 7)");
+	 * index2 = player2_input.nextInt() + 7;
+	 * 
+	 * if(index2 == 8 || index2 == 9 || index2 == 10 || index2 == 11 || index2 == 12
+	 * || index2 == 13 || index2 == 14) { System.out.println("Player 2 chose " +
+	 * index2);
+	 * 
+	 * while(gameboard[index2] != 0) {
+	 * 
+	 * System.out.println("You picked up " + gameboard[index2] +
+	 * " shells from pocket " + index2); hand = gameboard[index2]; gameboard[index2]
+	 * = 0;
+	 * 
+	 * // Distribute the shells to the next pockets while(hand >= 1 && index2 <= 15)
+	 * {
+	 * 
+	 * index2++; gameboard[index2] = gameboard[index2] + 1;
+	 * System.out.println("You dropped a shell in index " + index2);
+	 * 
+	 * 
+	 * // Player 2 goes again if they land in their own store if(index2 == 15 &&
+	 * hand == 1) { System.out.println("You landed in your own store! Go again!");
+	 * play2(); }
+	 * 
+	 * // Loop back to the 'beginning' of array/board (index 0) if Player 2 still
+	 * has more than 1 shell in hand // This is the only significant difference
+	 * between Play() and Play2(). if(index2 == 15 && hand != 1) { index2 = 0;
+	 * gameboard[0] = gameboard[0] + 1;
+	 * System.out.println("You dropped a shell in index 0"); hand--;
+	 * 
+	 * }
+	 * 
+	 * // Skip Player 1's store if(index2 == 6) { index2 = 8; gameboard[8] =
+	 * gameboard[8] + 1; System.out.println("You dropped a shell in index 8");
+	 * hand--; }
+	 * 
+	 * board.displayBoard();
+	 * 
+	 * hand--; System.out.println("There are " + hand + " shells left in my hand");
+	 * }
+	 * 
+	 * if(index2 != 15 && gameboard[index2] == 1) { break; }
+	 * 
+	 * }
+	 * 
+	 * } else { System.out.println("Please choose another index"); play2(); }
+	 * 
+	 * // Capturing shells; Player 1's turn afterwards if(gameboard[8] == 1 && hand
+	 * == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[6] +
+	 * " shells! It is now Player 1's turn");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[8]; gameboard[8] = 0; gameboard[15]
+	 * = gameboard[15] + gameboard[6]; gameboard[6] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * if(gameboard[9] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[5] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[9]; gameboard[9] = 0; gameboard[15]
+	 * = gameboard[15] + gameboard[5]; gameboard[5] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * if(gameboard[10] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[4] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[10]; gameboard[10] = 0;
+	 * gameboard[15] = gameboard[15] + gameboard[4]; gameboard[4] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * if(gameboard[11] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[3] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[11]; gameboard[11] = 0;
+	 * gameboard[15] = gameboard[15] + gameboard[3]; gameboard[3] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * if(gameboard[12] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[2] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[12]; gameboard[12] = 0;
+	 * gameboard[15] = gameboard[15] + gameboard[2]; gameboard[2] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * 
+	 * if(gameboard[13] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[1] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[13]; gameboard[13] = 0;
+	 * gameboard[15] = gameboard[15] + gameboard[1]; gameboard[1] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * if(gameboard[14] == 1 && hand == 0) {
+	 * 
+	 * System.out.println("You have captured " + gameboard[0] +
+	 * " shells! It is now Player 1's turn.");
+	 * 
+	 * gameboard[15] = gameboard[15] + gameboard[14]; gameboard[14] = 0;
+	 * gameboard[15] = gameboard[15] + gameboard[0]; gameboard[0] = 0;
+	 * 
+	 * player1_turn = true; player2_turn = false; play();
+	 * 
+	 * }
+	 * 
+	 * // End turn if you land on an empty pocket on your Player 1's side
+	 * if(gameboard[0] == 1 || gameboard[1] == 1 || gameboard[2] == 1 ||
+	 * gameboard[3] == 1 || gameboard[4] == 1 || gameboard[5] == 1 || gameboard[6]
+	 * == 1 && hand == 1); { System.out.
+	 * println("You have landed on an empty space on your opponent's side. It's now Player 1's turn."
+	 * ); player1_turn = true; player2_turn = false; play(); }
+	 * 
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 	
 	// Display final results
 	private static void end() {

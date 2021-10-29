@@ -38,7 +38,7 @@ public class MancalaMain extends Board {
 			PlayMancala.player2_turn = true;
 			PlayMancala.player1_turn = false;
 			System.out.println("Player 2 will go first.");
-			PlayMancala.play2();
+			PlayMancala.play();
 			
 		}
 		
