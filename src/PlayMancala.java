@@ -5,14 +5,15 @@ public class PlayMancala extends Board {
 	
 	private static Scanner player1_input; 		 // Takes Player 1's input to see which index to pick up shells from
 	private static Scanner player2_input; 		 // Takes Player 2's input to see which index to pick up shells from
+	private static Scanner player_input = new Scanner(System.in);
 	private static int index; 					 // Keeps track of the index during Player 1's turn
-	private static int index2; 					 // Keeps track of the index during Player 2's turn
 	private static int hand = 0; 				 // Keeps track of how many shells are currently at hand; used for both Players' turns
 	public static boolean player1_turn = false; // Determines who's turn it currently is;
 	public static boolean player2_turn = false; // both start out false.
 	private static Board board;
 	
 	// Player 1's movements
+	// TODO: split up play() method to different sub-methods (distrubte shells, capture shells, end game)
 	public static void play() {
 		
 		// Ask Player 1 which non-zero index to pick.
@@ -35,7 +36,7 @@ public class PlayMancala extends Board {
 			// Add any remaining shells on Player 2's side to their collection
 			gameboard[7] = gameboard[7] + gameboard[0] + gameboard[1] + gameboard[2] + gameboard[3] + gameboard[4] + gameboard[5] + gameboard[6];
 			
-			// Is there a need to empty out other pockets at the end of the game? 
+			// TODO: Is there a need to empty out other pockets at the end of the game? 
 			/*
 			 * gameboard[8] = 0; gameboard[9] = 0; gameboard[10] = 0; gameboard[11] = 0;
 			 * gameboard[12] = 0; gameboard[13] = 0; gameboard[14] = 0;
@@ -44,82 +45,105 @@ public class PlayMancala extends Board {
 			 */
 			
 			end();
-		} 
+			} 
 			
-			/*
-			 * TODO: if player 2 turn == true, check if there are no more shells on player 2's
-			 * side Remove below else statement, play the game after first two endgame
-			 * checks.
-			 */
-			
-			//else { // Play the rest of the game
-			
+			distributeShells();
+			}
+	
 			// PART 1:  DISTRIBUTING SHELLS
+		private static void distributeShells() {
+			
 			// Choose a pocket
-			System.out.println("Player 1, choose one of your pockets (1 through 7)"); // TODO: Remove player specific comments (except for choosing pockets; each player can only select certain pockets)
-			index = player1_input.nextInt() - 1; // index is where Player 1 picks up the shells
+			if (player1_turn == true && player2_turn == false) {
+				System.out.println("Player 1, choose one of your pockets (1 through 7)");
+				index = player_input.nextInt() - 1;
+			}
 			
-			// TODO: find a way to loop starting at specific point(s) depending on player turn
-			if(index == 0 || index == 1 || index == 2 ||
-			   index == 3 || index == 4 || index == 5 || index == 6 && gameboard[index] != 0) {
-				
-				System.out.println("I have selected: " + index);
-				
-				// Continue to loop while there are shells to be picked up
-				while(gameboard[index] != 0) {
-					
-					System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
-					
-					// Get shells from selected index to hand
-					hand = gameboard[index];
-					gameboard[index] = 0;
-					// Index that's selected now has 0 shells in its pocket (b/c you just picked them up)
+			if (player2_turn == true && player1_turn == false) {
+				System.out.println("Player 2, choose one of your pockets (1 through 7)");
+				index = player_input.nextInt() + 7;
+			}
 			
-					// Distribute the shells to the next pockets
-					while(hand >= 1 && index <= 14) {
-						
-						index++;
+			System.out.println("I have selected: " + index);
+			
+			if (gameboard[index] == 0) {
+				System.out.println("That pocket doesn't have any shells in it");
+			}
+			
+			// Continue distrubting shells if the player's last shell lands in a pocket that has shells in it. (reword this)
+			while(gameboard[index] != 0) {
+				System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
+				
+				// Get shells from selected index to hand
+				hand = gameboard[index];
+				gameboard[index] = 0;
+				
+				// Continue distributing shells while the player has shells in their hand.
+				while(hand >= 1) {
+					index++;
+					
+					// Loop back to beginning of array once end is reached.
+					if (index == 16) {
+						index = 0;
+						System.out.println("You looped back to the beginning");
+					}
+					
+					// Skip certain pockets depending on player turn.
+					switch(index) {
+					
+					case 15:
+						if (player2_turn == true) {
+							gameboard[index] = gameboard[index] + 1;
+							System.out.println("You dropped 1 shell in index " + index);
+							
+						}						
+						break;
+					
+					case 7:
+						if (player1_turn == true) {
+							gameboard[index] = gameboard[index] + 1;
+							System.out.println("You dropped a shell in index " + index);
+						}
+					    
+						break;
+					default:
 						gameboard[index] = gameboard[index] + 1;
 						System.out.println("You dropped 1 shell in index " + index);
 						
-						// Skip Player 2's store, go back to Player 1's side (index 0)
-						if(index == 14) {
-							index = 0;
-							gameboard[0] = gameboard[0] + 1;
-							System.out.println("You dropped 1 shell in index 0");
-							hand--;
-							
-						}
-						
-						// Player 1 goes again if the last shell lands in index 7 (AKA their own store)
-						if(index == 7 && hand == 1) {
-							System.out.println("You landed in your own store! Go again!");
-							play();
-						}
-						
-						// Decrement the amount of shells in hand by 1 b/c you're placing shells in each pocket.
-						hand--;
-						board.displayBoard();
-						System.out.println("You have " + hand + " shells left in your hand");
-				}
-					
-					// Breaks from loop if you place your last shell on an empty pocket; capturing starts to occur
-					if(index != 7 && gameboard[index] == 1) {
 						break;
 					}
 					
-			}	
-		}	
-				
-			else { // Supposed to occur if you pick an index w/o any shells
-				System.out.println("That pocket doesn't have any shells in it");
-				System.out.println("Choose one of your pockets (0 through 6)");
-				play();
+					hand--;
+					board.displayBoard();
+					System.out.println("You have " + hand + " shells left in your hand");
 			}
 			
+			
+				
+			// *******************NEXT STEPS*****************************
+			// At this point, there aren't anymore shells in the hand to distribute.
+			// Next action depends on what pocket the last shell landed on.
+			// If there are shells present, pick them up, continue distributing shells
+			// If player landed in own store, player goes again.
+			// If not, capturing sequence begins
+			
+			if (player1_turn == true && index == 7) {
+				System.out.println("Player 1 landed in own store, go again!");
+				distributeShells();
+			}
+			
+			if (player2_turn == true && index == 15) {
+				System.out.println("Player 2 landed in own store, go again!");
+				distributeShells();
+			}
+				} 
+			
+			System.out.println("No more shells in index " + index);
+		}
+
 			// PART 2: CAPTURING SHELLS			
 			// Capture opponent's shells; Player 2's turn afterwards
-			if(gameboard[0] == 1 && hand == 0) {
+			/*if(gameboard[0] == 1 && hand == 0) {
 				
 				System.out.println("You have collected " + gameboard[14] + " shells from Player 2. It is now Player 2's turn.");
 				
@@ -233,7 +257,7 @@ public class PlayMancala extends Board {
 		player1_turn = false;
 		player2_turn = true;
 		play2();
-		
+		// */
 		// }
 	
 	// Player 2's movements; alot of the same as Player 1's movements except for one extra if statement while distributing shells
