@@ -71,7 +71,7 @@ public class PlayMancala extends Board {
 			}
 			
 			// Continue distrubting shells if the player's last shell lands in a pocket that has shells in it. (reword this)
-			while(gameboard[index] != 0) {
+			while(gameboard[index] != 1) {
 				System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
 				
 				// Get shells from selected index to hand
@@ -93,27 +93,30 @@ public class PlayMancala extends Board {
 					
 					case 15:
 						if (player2_turn == true) {
+							
 							gameboard[index] = gameboard[index] + 1;
 							System.out.println("You dropped 1 shell in index " + index);
+							hand--;
 							
 						}						
 						break;
 					
 					case 7:
 						if (player1_turn == true) {
+							
 							gameboard[index] = gameboard[index] + 1;
 							System.out.println("You dropped a shell in index " + index);
+							hand--;
 						}
 					    
 						break;
 					default:
 						gameboard[index] = gameboard[index] + 1;
 						System.out.println("You dropped 1 shell in index " + index);
-						
+						hand--;
 						break;
 					}
 					
-					hand--;
 					board.displayBoard();
 					System.out.println("You have " + hand + " shells left in your hand");
 			}
@@ -127,6 +130,8 @@ public class PlayMancala extends Board {
 			// If player landed in own store, player goes again.
 			// If not, capturing sequence begins
 			
+			
+				
 			if (player1_turn == true && index == 7) {
 				System.out.println("Player 1 landed in own store, go again!");
 				distributeShells();
@@ -136,10 +141,10 @@ public class PlayMancala extends Board {
 				System.out.println("Player 2 landed in own store, go again!");
 				distributeShells();
 			}
-				} 
+		} 
 			
-			System.out.println("No more shells in index " + index);
-		}
+		System.out.println("No more shells in index " + index);
+	}
 
 			// PART 2: CAPTURING SHELLS			
 			// Capture opponent's shells; Player 2's turn afterwards
