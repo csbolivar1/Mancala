@@ -9,10 +9,6 @@ import java.util.Scanner;
 
 public class MancalaMain extends Board {
 	
-	//private static Scanner player1_input; 		 // Takes Player 1's input to see which index to pick up shells from
-	//private static Scanner player2_input; 		 // Takes Player 2's input to see which index to pick up shells from
-	//private static boolean player1_turn = false; // Determines who's turn it currently is;
-	//private static boolean player2_turn = false; // both start out false.
 	private static Board board;
 
 	public static void main(String[] args) {

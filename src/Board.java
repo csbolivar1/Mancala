@@ -15,7 +15,7 @@ public class Board {
 	
 	public Board() {}
 	
-	// Hashmaps to pair opposite pockets for capturing pieces
+	// Hashmaps to pair opposite pockets for capturing shells
 	protected static void configurePlayerSides() {
 		player1side.put(0, 14);
 		player1side.put(1, 13);
