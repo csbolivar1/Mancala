@@ -11,7 +11,6 @@ public class PlayMancala extends Board {
 	private static Board board;
 	
 	// Player 1's movements
-	// TODO: split up play() method to different sub-methods (distrubte shells, capture shells, end game)
 	public static void play() {
 		
 		// Ask Player 1 which non-zero index to pick.
@@ -133,7 +132,6 @@ public class PlayMancala extends Board {
 		System.out.println("No more shells in index " + index);
 		captureShells();
 		
-		// TODO: need to account for scenario where lash shell lands on opposite player's side (turn ends)
 	}
 		
 	private static void captureShells() {
@@ -142,7 +140,7 @@ public class PlayMancala extends Board {
 		if (player1_turn == true) {
 			for(Integer i : player1side.keySet()) {
 				if(i == index) {
-					gameboard[7] = gameboard[index] + gameboard[player1side.get(i)];
+					gameboard[7] = gameboard[7] + gameboard[index] + gameboard[player1side.get(i)];
 					System.out.println("Player 1 captured " + (gameboard[index] + gameboard[player1side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player1side.get(i)] = 0;
@@ -155,13 +153,19 @@ public class PlayMancala extends Board {
 					break;
 				}
 			}
+			
+			// Execute if last shell lands on opposite side.
+			System.out.println("Landed in Player 2's side; it's player 2's turn.");
+			player1_turn = false;
+			player2_turn = true;
+			play();
 		}
 		
 		// Loop through player 2's hashmap keys, find corresponding player 1 pocket, capture shells, end turn
 		if (player2_turn == true) {
 			for(Integer i : player2side.keySet()) {
 				if(i == index) {
-					gameboard[15] = gameboard[index] + gameboard[player2side.get(i)];	
+					gameboard[15] = gameboard[15] + gameboard[index] + gameboard[player2side.get(i)];	
 					System.out.println("Player 2 captured " + (gameboard[index] + gameboard[player2side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player2side.get(i)] = 0;
@@ -174,7 +178,16 @@ public class PlayMancala extends Board {
 					break;
 				}
 			}
+			
+			// Execute if last shell lands on opposite side.
+			System.out.println("Landed in Player 1's side; it's player 1's turn.");
+			player2_turn = false;
+			player1_turn = true;
+			play();
+			
 		}
+		
+		play();
 	}
 	
 	// Display final results
