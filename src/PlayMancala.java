@@ -19,6 +19,7 @@ public class PlayMancala extends Board {
 
 		// Check if either players' sides are completely empty
 		// if one of them is, game is over.
+		// TODO: infinite loop when one player's side is emptied out
 		if((gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 				// Player 1 side
 		   gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0)
 				||
@@ -44,11 +45,11 @@ public class PlayMancala extends Board {
 			end();
 			} 
 			
-			distributeShells();
+			pickUpShells();
 			}
 	
 			// PART 1:  DISTRIBUTING SHELLS
-		private static void distributeShells() {
+		private static void pickUpShells() {
 			
 			// Choose a pocket
 			if (player1_turn == true && player2_turn == false) {
@@ -68,70 +69,102 @@ public class PlayMancala extends Board {
 			}
 			
 			// Continue distrubting shells if the player's last shell lands in a pocket that has shells in it. (reword this)
-			while(gameboard[index] != 1) {
-				System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
+			
 				
-				// Get shells from selected index to hand
-				hand = gameboard[index];
-				gameboard[index] = 0;
 				
-				// Continue distributing shells while the player has shells in their hand.
-				while(hand >= 1) {
-					index++;
-					
-					// Loop back to beginning of array once end is reached.
-					if (index == 16) {
-						index = 0;
-						System.out.println("You looped back to the beginning");
-					}
-					
-					// Skip certain pockets depending on player turn.
-					switch(index) {
-					
-					case 15:
-						if (player2_turn == true) {
-							
-							gameboard[index] = gameboard[index] + 1;
-							System.out.println("You dropped 1 shell in index " + index);
-							hand--;
-							
-						}						
-						break;
-					
-					case 7:
-						if (player1_turn == true) {
-							
-							gameboard[index] = gameboard[index] + 1;
-							System.out.println("You dropped a shell in index " + index);
-							hand--;
-						}
-					    
-						break;
-					default:
-						gameboard[index] = gameboard[index] + 1;
-						System.out.println("You dropped 1 shell in index " + index);
-						hand--;
-						break;
-					}
-					
-					board.displayBoard();
-					System.out.println("You have " + hand + " shells left in your hand");
+				
+			distributeShells();
+			
+			if(gameboard[index] > 0) {
+				System.out.println("There are still shells to be picked up.");
 			}
-
+				
 			if (player1_turn == true && index == 7) {
 				System.out.println("Player 1 landed in own store, go again!");
-				distributeShells();
+				pickUpShells();
 			}
 			
 			if (player2_turn == true && index == 15) {
 				System.out.println("Player 2 landed in own store, go again!");
-				distributeShells();
+				pickUpShells();
 			}
-		} 
+		//} 
 			
 		System.out.println("No more shells in index " + index);
-		captureShells();
+		System.out.println("Time to capture shells");
+		//captureShells();
 		
+	}
+	
+    // TODO: potentially resolved issue when selecting pocket with one shell, need to test further.
+	private static void distributeShells() {
+		
+		System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
+		
+		// Transfer shells from selected index to hand
+		hand = gameboard[index];
+		gameboard[index] = 0;
+		
+		// Continue distributing shells while the player has shells in their hand.
+		while(hand > 0) {
+			index++;
+			
+			// Loop back to beginning of array once end is reached.
+			if (index == 16) {
+				index = 0;
+				System.out.println("You looped back to the beginning");
+			}
+			
+			// Skip certain pockets depending on player turn.
+			switch(index) {
+			
+			case 15:
+				if (player2_turn == true) {
+					
+					gameboard[index] = gameboard[index] + 1;
+					System.out.println("You dropped 1 shell in index " + index);
+					hand--;
+					
+				}						
+				break;
+			
+			case 7:
+				if (player1_turn == true) {
+					
+					gameboard[index] = gameboard[index] + 1;
+					System.out.println("You dropped a shell in index " + index);
+					hand--;
+				}
+			    
+				break;
+			
+			default:
+				if(gameboard[index] == 0 && hand == 1) {
+					gameboard[index] = gameboard[index] + 1;
+					System.out.println("You dropped 1 shell in index " + index);
+					hand--;
+					System.out.println("Time to capture shells");
+					captureShells();
+				}
+				gameboard[index] = gameboard[index] + 1;
+				System.out.println("You dropped 1 shell in index " + index);
+				hand--;
+				
+				break;
+			}
+			
+			board.displayBoard();
+			System.out.println("You have " + hand + " shells left in your hand");
+			
+			
+			
+	}
+		if(gameboard[index] > 0) {
+			System.out.println("There are still shells to be picked up.");
+			distributeShells();
+		}
+		
+		//index = i;
 	}
 		
 	private static void captureShells() {
