@@ -159,7 +159,7 @@ public class PlayMancala extends Board {
 			
 			
 	}
-		if(gameboard[index] > 0) {
+		if(gameboard[index] > 0 && index != 7 && index != 15) {
 			System.out.println("There are still shells to be picked up.");
 			distributeShells();
 		}
