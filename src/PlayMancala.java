@@ -63,6 +63,7 @@ public class PlayMancala extends Board {
 
 		if (gameboard[index] == 0) {
 			System.out.println("That pocket doesn't have any shells in it");
+			pickUpShells();
 		}
 
 		// Continue distrubting shells if the player's last shell lands in a pocket that has shells in it. 
@@ -159,8 +160,7 @@ public class PlayMancala extends Board {
 			for (Integer i : player1side.keySet()) {
 				if (i == index) {
 					gameboard[7] = gameboard[7] + gameboard[index] + gameboard[player1side.get(i)];
-					System.out.println(
-							"Player 1 captured " + (gameboard[index] + gameboard[player1side.get(i)]) + " shells.");
+					System.out.println("Player 1 captured " + (gameboard[index] + gameboard[player1side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player1side.get(i)] = 0;
 					displayBoard();
@@ -186,8 +186,7 @@ public class PlayMancala extends Board {
 			for (Integer i : player2side.keySet()) {
 				if (i == index) {
 					gameboard[15] = gameboard[15] + gameboard[index] + gameboard[player2side.get(i)];
-					System.out.println(
-							"Player 2 captured " + (gameboard[index] + gameboard[player2side.get(i)]) + " shells.");
+					System.out.println("Player 2 captured " + (gameboard[index] + gameboard[player2side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player2side.get(i)] = 0;
 					displayBoard();

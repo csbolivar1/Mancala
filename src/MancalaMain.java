@@ -10,12 +10,12 @@ import java.util.Scanner;
 public class MancalaMain extends Board {
 
 	private static Board board;
-
+	
 	public static void main(String[] args) {
-		int num;
+		int num = 0;
 		Random coin_flip = new Random();
 
-		board.fillBoard(); // Get the board's start state
+		board.fillBoard(); 
 		board.configurePlayerSides();
 
 		System.out.println("Lets Play Mancala!!!");
