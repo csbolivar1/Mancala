@@ -37,10 +37,10 @@ public class Board {
 	// Reset the gameboard to its default state (7 shells per pocket, 0 in stores)
 	protected static void fillBoard() {
 		for (int i = 0; i <= 6; i++) {
-			gameboard[i] = 1;
+			gameboard[i] = 7;
 		}
 		for (int j = 8; j <= 14; j++) {
-			gameboard[j] = 1;
+			gameboard[j] = 0;
 		}
 	}
 

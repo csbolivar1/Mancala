@@ -19,26 +19,9 @@ public class PlayMancala extends Board {
 		// if one of them is, game is over.
 		if ((gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && // Player 1 side
 				gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0)
-				|| (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && // Player 2 side
+				&& (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && // Player 2 side
 						gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 && gameboard[14] == 0)) {
-			System.out.println("There are no more shells on Player 1's side!");
-
-			// Add any remaining shells on Player 1's side to their collection
-			gameboard[15] = gameboard[15] + gameboard[8] + gameboard[9] + gameboard[10] + gameboard[11] + gameboard[12]
-					+ gameboard[13] + gameboard[14];
-
-			// Add any remaining shells on Player 2's side to their collection
-			gameboard[7] = gameboard[7] + gameboard[0] + gameboard[1] + gameboard[2] + gameboard[3] + gameboard[4]
-					+ gameboard[5] + gameboard[6];
-
-			// TODO: Is there a need to empty out other pockets at the end of the game?
-			/*
-			 * gameboard[8] = 0; gameboard[9] = 0; gameboard[10] = 0; gameboard[11] = 0;
-			 * gameboard[12] = 0; gameboard[13] = 0; gameboard[14] = 0; gameboard[0] = 0;
-			 * gameboard[1] = 0; gameboard[2] = 0; gameboard[3] = 0; gameboard[4] = 0;
-			 * gameboard[5] = 0; gameboard[6] = 0;
-			 */
-
+			System.out.println("All pockets are empty");
 			end();
 		}
 
@@ -47,14 +30,32 @@ public class PlayMancala extends Board {
 
 	// PART 1: DISTRIBUTING SHELLS
 	private static void pickUpShells() {
-
+		
 		// Choose a pocket
 		if (player1_turn == true && player2_turn == false) {
+			
+			// Skip turn if all selectable pockets are empty.
+			if (gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 
+					gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0) {
+				System.out.println("There are no more shells on Player 1's side. It's Player 2's turn");
+				player1_turn = false;
+				player2_turn = true;
+				play();
+			}
 			System.out.println("Player 1, choose one of your pockets (1 through 7)");
 			index = player_input.nextInt() - 1;
 		}
 
 		if (player2_turn == true && player1_turn == false) {
+			
+			// Skip turn if all selectable pockets are empty.
+			if (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && 
+					gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 && gameboard[14] == 0) {
+				System.out.println("There are no more shells on Player 2's side. It's Player 2's turn");
+				player2_turn = false;
+				player1_turn = true;
+				play();
+			}
 			System.out.println("Player 2, choose one of your pockets (1 through 7)");
 			index = player_input.nextInt() + 7;
 		}
