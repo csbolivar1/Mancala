@@ -2,24 +2,23 @@ import java.util.Scanner;
 
 public class PlayMancala extends Board {
 
-	public static boolean player1_turn = false; // Determines who's turn it currently is;
-	public static boolean player2_turn = false; // both start out false.
+	public static boolean player1_turn = false; 
+	public static boolean player2_turn = false; 
 	private static int hand = 0; // Keeps track of how many shells are currently at hand; used for both Players' turns
-	private static int index; // Keeps track of the index during Player 1's turn
+	private static int index; // Keeps track of the index
 	private static Board board;
 	private static Scanner player_input;
 
 	public static void play() {
 
-		// Ask Player which non-zero index to pick.
+		// Ask Player which pocket to pick.
 		player_input = new Scanner(System.in);
 		board.displayBoard();
 
-		// Check if either players' sides are completely empty
-		// if one of them is, game is over.
-		if ((gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && // Player 1 side
+		// If all selectable pockets are empty, game is over.
+		if ((gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 
 				gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0)
-				&& (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && // Player 2 side
+				&& (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && 
 						gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 && gameboard[14] == 0)) {
 			System.out.println("All pockets are empty");
 			end();
@@ -28,13 +27,12 @@ public class PlayMancala extends Board {
 		pickUpShells();
 	}
 
-	// PART 1: DISTRIBUTING SHELLS
 	private static void pickUpShells() {
 		
 		// Choose a pocket
 		if (player1_turn == true && player2_turn == false) {
 			
-			// Skip turn if all selectable pockets are empty.
+			// Skip turn if all selectable pockets on current player's side are empty.
 			if (gameboard[0] == 0 && gameboard[1] == 0 && gameboard[2] == 0 && 
 					gameboard[3] == 0 && gameboard[4] == 0 && gameboard[5] == 0 && gameboard[6] == 0) {
 				System.out.println("There are no more shells on Player 1's side. It's Player 2's turn");
@@ -48,7 +46,7 @@ public class PlayMancala extends Board {
 
 		if (player2_turn == true && player1_turn == false) {
 			
-			// Skip turn if all selectable pockets are empty.
+			// Skip turn if all selectable pockets on current player's side are empty.
 			if (gameboard[8] == 0 && gameboard[9] == 0 && gameboard[10] == 0 && 
 					gameboard[11] == 0 && gameboard[12] == 0 && gameboard[13] == 0 && gameboard[14] == 0) {
 				System.out.println("There are no more shells on Player 2's side. It's Player 2's turn");
@@ -59,9 +57,8 @@ public class PlayMancala extends Board {
 			System.out.println("Player 2, choose one of your pockets (1 through 7)");
 			index = player_input.nextInt() + 7;
 		}
-
-		System.out.println("I have selected: " + index);
-
+		
+		// Cannot select pocket with 0 shells in it
 		if (gameboard[index] == 0) {
 			System.out.println("That pocket doesn't have any shells in it");
 			pickUpShells();
@@ -70,6 +67,7 @@ public class PlayMancala extends Board {
 		// Continue distrubting shells if the player's last shell lands in a pocket that has shells in it. 
 		distributeShells();
 
+		// Current player has another turn if the last shell lands in their own store.
 		if (player1_turn == true && index == 7) {
 			System.out.println("Player 1 landed in own store, go again!");
 			play();
@@ -81,14 +79,11 @@ public class PlayMancala extends Board {
 		}
 
 		System.out.println("No more shells in index " + index);
-		System.out.println("Time to capture shells");
 		captureShells();
 
 	}
 
 	private static void distributeShells() {
-
-		System.out.println("You picked up " + gameboard[index] + " shells from pocket " + index);
 
 		// Transfer shells from selected index to hand
 		hand = gameboard[index];
@@ -98,10 +93,9 @@ public class PlayMancala extends Board {
 		while (hand > 0) {
 			index++;
 
-			// Loop back to beginning of array once end is reached.
+			// Loop back to beginning of array.
 			if (index == 16) {
 				index = 0;
-				System.out.println("You looped back to the beginning");
 			}
 
 			// Skip certain pockets depending on player turn.
@@ -109,54 +103,46 @@ public class PlayMancala extends Board {
 
 			case 15:
 				if (player2_turn == true) {
-
 					gameboard[index] = gameboard[index] + 1;
-					System.out.println("You dropped 1 shell in index " + index);
 					hand--;
-
 				}
 
 				break;
 
 			case 7:
 				if (player1_turn == true) {
-
 					gameboard[index] = gameboard[index] + 1;
-					System.out.println("You dropped a shell in index " + index);
 					hand--;
 				}
 
 				break;
 
 			default:
+				
+				// Initiate capture sequence if last shell lands in an empty pocket
 				if (gameboard[index] == 0 && hand == 1) {
 					gameboard[index] = gameboard[index] + 1;
-					System.out.println("You dropped 1 shell in index " + index);
 					hand--;
-					System.out.println("Time to capture shells");
 					captureShells();
 				}
+				
+				// Default option, drop one shell in a pocket, move to next pocket
 				gameboard[index] = gameboard[index] + 1;
-				System.out.println("You dropped 1 shell in index " + index);
 				hand--;
-
 				break;
 			}
-
-			board.displayBoard();
-			System.out.println("You have " + hand + " shells left in your hand");
-
+			
 		}
+		
+		// Continue picking up and distruting shells
 		if (gameboard[index] > 0 && index != 7 && index != 15) {
-			System.out.println("There are still shells to be picked up.");
 			distributeShells();
 		}
 	}
 
 	private static void captureShells() {
 
-		// Loop through player 1's hashmap keys, find corresponding player 2 pocket,
-		// capture shells, end turn
+		// Loop through player 1's hashmap keys, find corresponding player 2 pocket, capture shells, end turn
 		if (player1_turn == true) {
 			for (Integer i : player1side.keySet()) {
 				if (i == index) {
@@ -164,7 +150,6 @@ public class PlayMancala extends Board {
 					System.out.println("Player 1 captured " + (gameboard[index] + gameboard[player1side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player1side.get(i)] = 0;
-					displayBoard();
 
 					// Switch to Player 2 after capturing
 					player1_turn = false;
@@ -181,8 +166,7 @@ public class PlayMancala extends Board {
 			play();
 		}
 
-		// Loop through player 2's hashmap keys, find corresponding player 1 pocket,
-		// capture shells, end turn
+		// Loop through player 2's hashmap keys, find corresponding player 1 pocket, capture shells, end turn
 		if (player2_turn == true) {
 			for (Integer i : player2side.keySet()) {
 				if (i == index) {
@@ -190,7 +174,6 @@ public class PlayMancala extends Board {
 					System.out.println("Player 2 captured " + (gameboard[index] + gameboard[player2side.get(i)]) + " shells.");
 					gameboard[index] = 0;
 					gameboard[player2side.get(i)] = 0;
-					displayBoard();
 
 					// Switch to Player 1 after capturing
 					player2_turn = false;
@@ -214,8 +197,8 @@ public class PlayMancala extends Board {
 	// Display final results
 	private static void end() {
 
-		System.out.println("Player 1 has " + gameboard[7] + " shells.");
-		System.out.println("Player 2 has " + gameboard[15] + " shells.");
+		System.out.println("Player 1 total: " + gameboard[7]);
+		System.out.println("Player 2 total: " + gameboard[15]);
 
 		// If player 1 has more shells, player 1 wins
 		if (gameboard[7] > gameboard[15]) {
@@ -229,7 +212,7 @@ public class PlayMancala extends Board {
 			System.out.println("Player 2 wins!");
 		}
 
-		// If player 1 and player 2 are tied (49 shells each)
+		// If player 1 and player 2 are tied (49 each)
 		if (gameboard[7] == gameboard[15]) {
 			board.displayBoard();
 			System.out.println("Tie Game!");

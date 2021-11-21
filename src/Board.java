@@ -40,7 +40,7 @@ public class Board {
 			gameboard[i] = 7;
 		}
 		for (int j = 8; j <= 14; j++) {
-			gameboard[j] = 0;
+			gameboard[j] = 7;
 		}
 	}
 
