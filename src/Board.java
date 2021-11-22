@@ -1,5 +1,10 @@
 import java.util.HashMap;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /*Mancala Glossary:
 	Stores - location of each players' total count
 	Shells - the 'gamepieces', represented by numbers in each index
@@ -69,5 +74,18 @@ public class Board {
 		System.out.println("	   	  Player 1's Side		");
 		System.out.println("===================================================");
 
+	}
+	
+	public void start(Stage primaryStage) {
+		try {
+			// BorderPane root = new BorderPane();
+			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+			Scene scene = new Scene(root,400,400);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
