@@ -49,7 +49,7 @@ public class Board {
 
 		System.out.println();
 		System.out.println("=============================================================");
-		System.out.println("		  Player 2's Side		");
+		System.out.println("		     Player 2's Side		");
 		System.out.println();
 		System.out.print("    ");
 		
@@ -69,7 +69,7 @@ public class Board {
 		}
 
 		System.out.println("\n");
-		System.out.println("	   	  Player 1's Side		");
+		System.out.println("	   	     Player 1's Side		");
 		System.out.println("=============================================================");
 
 	}
