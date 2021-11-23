@@ -155,7 +155,7 @@ public class PlayMancala extends Board {
 					player1_turn = false;
 					player2_turn = true;
 
-					break;
+					play();
 				}
 			}
 
@@ -179,7 +179,7 @@ public class PlayMancala extends Board {
 					player2_turn = false;
 					player1_turn = true;
 
-					break;
+					play();
 				}
 			}
 
