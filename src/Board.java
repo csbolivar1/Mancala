@@ -47,10 +47,12 @@ public class Board {
 	// Show the gameboard
 	protected static void displayBoard() {
 
-		System.out.println("===================================================");
+		System.out.println();
+		System.out.println("=============================================================");
 		System.out.println("		  Player 2's Side		");
+		System.out.println();
 		System.out.print("    ");
-
+		
 		// Upper row is player 2's side
 		for (int p = 14; p > 7; p--) {
 
@@ -65,9 +67,10 @@ public class Board {
 		for (int p = 0; p < 7; p++) {
 			System.out.print(gameboard[p] + "       ");
 		}
+
 		System.out.println("\n");
 		System.out.println("	   	  Player 1's Side		");
-		System.out.println("===================================================");
+		System.out.println("=============================================================");
 
 	}
 }

@@ -40,7 +40,7 @@ public class PlayMancala extends Board {
 				player2_turn = true;
 				play();
 			}
-			System.out.println("Player 1, choose one of your pockets (1 through 7)");
+			System.out.println("Player 1, choose a pocket (1) through (7)");
 			index = player_input.nextInt() - 1;
 		}
 
@@ -54,7 +54,7 @@ public class PlayMancala extends Board {
 				player1_turn = true;
 				play();
 			}
-			System.out.println("Player 2, choose one of your pockets (1 through 7)");
+			System.out.println("Player 2, choose a pocket (1) through (7)");
 			index = player_input.nextInt() + 7;
 		}
 		
