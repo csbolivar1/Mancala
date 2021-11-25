@@ -6,9 +6,18 @@ Mancala is a turn based count and capture board game. More information can be fo
 
 To run, download as .zip file, extract and run the below command while in the bin directory
 
+<<<<<<< HEAD
 ```
 java MancalaMain
 ```
+=======
+## How to run
+
+Prerequisites: Ensure you have Java installed on your computer. You can download and install the latest Java version [here](https://www.java.com/download/ie_manual.jsp)
+
+In the PlayMancala folder, run PlayMancala.bat (safe to bypass Windows Defender warnings; .bat runs Mancala.jar)
+
+>>>>>>> e4381b2af0177127585acc7e8c1aa284e5b9e88d
 ## Objective
 The object of the game is to gather more shells than your opponent. Each player's total is the large pocket to their right side. 
 Shells are gathered by capturing them.
